@@ -4,7 +4,7 @@ const switchInitialState = {
   buttonState: "off",
 };
 
-export function switchReducer(state = switchInitialState, payload) {
+export default function switchReducer(state = switchInitialState, payload) {
   switch (payload.type) {
     case messages.TURN_ON:
       return { ...state, buttonState: "on" };

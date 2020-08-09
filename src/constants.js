@@ -1,17 +1,24 @@
-export const uiActions = keyMap([
+export const userActions = objKeyMap([
   "TURN_ON",
   "TURN_OFF",
   "PAUSE",
   "OVEN_ON",
   "OVEN_OFF",
   "OVEN_READY",
+  "OVEN_START_HEATING",
+  "ENGINE_START_WORKING",
+  "ENGINE_STOP_WORKING",
+  "EXTRUDER_ON",
+  "EXTRUDER_OFF",
+  "STAMPER_ON",
+  "STAMPER_OFF",
 ]);
 
 export const messages = {
-  ...uiActions,
+  ...userActions,
 };
 
-function keyMap(arr, f) {
+function objKeyMap(arr, f) {
   return Object.freeze(
     Object.create(
       null,

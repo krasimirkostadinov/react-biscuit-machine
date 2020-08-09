@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { createSelector } from "reselect";
 
 import { turnOnSwitch, turnOffSwitch, pauseSwitch } from "./actions";
-
 import SwitchComponent from "./view";
+
+export { default as reducer } from "./reducer";
 
 export default connect(
   createSelector(

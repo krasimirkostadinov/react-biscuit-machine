@@ -1,9 +1,12 @@
 import { combineReducers } from "redux";
 
 import appReducer from "./app";
-import { switchReducer } from "./components/switch/switchReducer";
+import { reducer as switchReducer } from "./components/switch/";
+import { reducer as ovenReducer } from "./components/oven";
+import { reducer as engineReducer } from "./components/engine";
 
 export default combineReducers({
-  // application: appReducer,
   switchButton: switchReducer,
+  oven: ovenReducer,
+  engine: engineReducer,
 });

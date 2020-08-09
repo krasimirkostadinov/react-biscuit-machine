@@ -1,36 +1,38 @@
-import { put, takeLatest, fork } from "redux-saga/effects";
+import { put, takeEvery, fork } from "redux-saga/effects";
 
 import { messages } from "../../constants";
 
-export function* changeStatusButtonSaga() {
-  yield fork(watchSwitchOnButton);
-  yield fork(watchSwitchOffButton);
-  yield fork(watchSwitchPauseButton);
-}
+import { turnOnSwitch, turnOffSwitch, pauseSwitch } from "./actions";
 
-function* watchSwitchOnButton() {
-  yield takeLatest(messages.TURN_ON, startMachine);
-}
+// export function* changeStatusButtonSaga() {
+//   yield fork(watchSwitchOnButton);
+//   yield fork(watchSwitchOffButton);
+//   yield fork(watchSwitchPauseButton);
+// }
 
-export function* startMachine() {
-  console.log("machine started");
-  // yield put({ type: messages.TURN_ON });
-}
+// function* watchSwitchOnButton() {
+//   yield takeEvery(messages.TURN_ON, startMachine);
+// }
 
-function* watchSwitchOffButton() {
-  yield takeLatest(messages.TURN_OFF, stopMachine);
-}
+// export function* startMachine() {
+//   console.log("switch on");
+//   // yield put(turnOnSwitch());
+// }
 
-export function stopMachine() {
-  console.log("stop machine");
-  // yield put({ type: messages.TURN_OFF });
-}
+// function* watchSwitchOffButton() {
+//   yield takeEvery(messages.TURN_OFF, stopMachine);
+// }
 
-function* watchSwitchPauseButton() {
-  yield takeLatest(messages.PAUSE, pauseMachine);
-}
+// export function* stopMachine() {
+//   console.log("stop switch");
+//   // yield put(turnOffSwitch());
+// }
 
-function* pauseMachine() {
-  console.log("pause machine");
-  // yield put({ type: messages.PAUSE });
-}
+// function* watchSwitchPauseButton() {
+//   yield takeEvery(messages.PAUSE, pauseMachine);
+// }
+
+// function* pauseMachine() {
+//   console.log("pause switch");
+//   // yield put(pauseSwitch);
+// }

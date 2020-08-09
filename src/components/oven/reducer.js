@@ -6,15 +6,20 @@ const initialState = {
   temperature: 0,
 };
 
-export function ovenReducer(state = initialState, payload) {
-  console.log("oven reducer", payload.type);
+export default function ovenReducer(state = initialState, payload) {
+  // console.log("oven reducer", payload.type);
   switch (payload.type) {
     case messages.OVEN_ON:
       return { ...state, isHeating: true };
-    case OVEN_OFF:
+    case messages.OVEN_OFF:
       return { ...state, isReady: false, isHeating: false };
-    case OVEN_READY:
-      return { ...state, isReady: true, temperature: payload.data };
+    case messages.OVEN_READY:
+      return {
+        ...state,
+        isReady: true,
+        temperature: payload.data,
+        isHeating: false,
+      };
     default:
       return state;
   }
