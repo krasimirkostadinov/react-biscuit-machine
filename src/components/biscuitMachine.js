@@ -1,18 +1,16 @@
-import React, { useState } from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
-import PropTypes from "prop-types";
+import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
-import SwitchComponent from "./switch/"; //ready
-import OvenComponent from "./oven/"; //ready
+import SwitchComponent from "./switch/";
+import OvenComponent from "./oven/";
 
 import EngineComponent from "./engine/view";
-import StamperComponent from "./stamper/view";
-import ExtruderComponent from "./extruder/view";
+import StamperComponent from "./stamper";
+import ExtruderComponent from "./extruder";
 import ConveyorComponent from "./conveyor";
+import BiscuitContainer from "./biscuit-container/view";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +43,10 @@ export default function BiscuitMachine() {
           <OvenComponent />
         </Grid>
 
+        <Grid item xs={3}>
+          <BiscuitContainer />
+        </Grid>
+
         <Grid item xs={12} className={classes.conveyor}>
           <ConveyorComponent />
         </Grid>
@@ -59,12 +61,3 @@ export default function BiscuitMachine() {
     </div>
   );
 }
-
-// export default connect(
-//   (state) => state.application,
-//   (dispatch) => ({
-//     onClickComponent(data) {
-//       // dispatch(clickComponent());
-//     },
-//   })
-// )(BiscuitMachine);

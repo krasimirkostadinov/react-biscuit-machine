@@ -1,20 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   oven: {
     border: "1px solid",
     width: 200,
-    height: 80,
+    height: 100,
     position: "relative",
     textAlign: "center",
-
-    // display: "flex",
-    // alignItems: "center",
-    // justifyContent: "center",
   },
   inner: {
     width: 160,
@@ -25,46 +19,66 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
   },
   heater: {
-    background: "#B00D23",
+    background: "#DDD",
     width: "70%",
     height: 4,
     border: "none",
     borderRadius: 5,
   },
+  heaterHeating: {
+    background: "#FF0000",
+  },
+  heaterHot: {
+    background: "#B00D23",
+  },
+  heaterCold: {
+    background: "#DDD",
+  },
+
   notice: {
-    color: red,
+    color: "#B00D23",
+    fontSize: 10,
     animation: "blinker 1s linear infinite",
-    "@global": {
-      "@keyframes blinker": {
-        "50%": { opacity: 0 },
-      },
-    },
+    transition: theme.transitions.create(["transform"], {
+      duration: theme.transitions.duration.complex,
+    }),
   },
 }));
-
-export const MIN_BAKING_TEMPERATURE = 220;
-export const MAX_BAKING_TEMPERATURE = 240;
 
 export default function OvenComponent({
   isReady,
   isHeating,
   temperature,
-  // onStartOven,
-  // onTurnOffOven,
-  // onOvenReady,
+  isEnginePulsation,
+  onAddBiscuit,
 }) {
   const classes = useStyles();
+
+  useEffect(() => {
+    if (isReady && isEnginePulsation) {
+      const interval = setInterval(() => {
+        onAddBiscuit && onAddBiscuit();
+      }, 2000);
+      return () => clearInterval(interval);
+    }
+  }, [isReady, isEnginePulsation, onAddBiscuit]);
 
   return (
     <>
       <div className={classes.oven}>
         <p>Oven</p>
-        {temperature > 0 && <p>temperature:{temperature}</p>}
         <div className={classes.inner}>
-          <hr className={classes.heater} />
+          <hr
+            className={`
+            ${classes.heater} 
+            ${isHeating ? classes.heaterHeating : ""} 
+            ${isReady ? classes.heaterHot : ""}
+          `}
+          />
+          {isHeating && <span className={classes.notice}>OVEN IS HEATING</span>}
+          {temperature > 0 && <span>temp.:{temperature}</span>}
         </div>
       </div>
-      {isHeating && <span className={classes.notice}>OVEN IS HEATING</span>}
     </>
   );
 }

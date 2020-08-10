@@ -1,17 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import BlurCircularIcon from "@material-ui/icons/WbSunny";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 
-import { pulseEngine } from "./actions";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    alignContent: "flex-start",
-    alignSelf: "center",
+    flexDirection: "column",
   },
   motorIcon: {
     fontSize: "6rem",
@@ -31,18 +28,18 @@ const useStyles = makeStyles((theme) => ({
 function EngineComponent({ isEngineRunning, isReady, onPulse }) {
   const classes = useStyles();
 
-  useEffect(() => {
-    if (isEngineRunning && isReady) {
-      const interval = setInterval(() => {
-        onPulse && onPulse();
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [isEngineRunning, isReady, onPulse]);
+  //TODO make pulse event
+  // useEffect(() => {
+  //   if (isEngineRunning && isReady) {
+  //     const interval = setInterval(() => {
+  //       onPulse && onPulse();
+  //     }, 1000);
+  //     return () => clearInterval(interval);
+  //   }
+  // }, []);
 
   return (
     <div className={classes.root}>
-      Engine working: {isEngineRunning ? "YES" : "NO"}
       <div>
         <BlurCircularIcon
           className={`${classes.motorIcon} ${
@@ -51,6 +48,7 @@ function EngineComponent({ isEngineRunning, isReady, onPulse }) {
           size="large"
         />
       </div>
+      <div>Engine working: {isEngineRunning ? "YES" : "NO"}</div>
     </div>
   );
 }
@@ -59,12 +57,9 @@ export default connect(
   createSelector(
     (s) => s.engineMachine,
     (s) => s.oven,
-    (isEngineRunning, isReady) => ({ ...isEngineRunning, ...isReady })
-  ),
-  (dispatch) => ({
-    onPulse() {
-      // dispatch(pulseEngine());
-      console.log("pulse dispatch");
-    },
-  })
+    (engineMachine, isReady) => ({
+      ...engineMachine,
+      ...isReady,
+    })
+  )
 )(EngineComponent);

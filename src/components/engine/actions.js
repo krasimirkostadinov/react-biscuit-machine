@@ -1,5 +1,4 @@
 import { messages } from "../../constants";
-import { func } from "prop-types";
 
 export function turnOnEngine() {
   return { type: messages.ENGINE_START_WORKING };
@@ -11,4 +10,8 @@ export function turnOffEngine() {
 
 export function pulseEngine() {
   return { type: messages.ENGINE_PULSE };
+}
+
+export function stopPulseEngine() {
+  return { type: messages.ENGINE_PULSE_STOP };
 }

@@ -4,8 +4,6 @@ import createSagaMiddleware from "redux-saga";
 import reducers from "./reducers";
 import { rootSaga } from "./sagas";
 
-// import { changeStatusButtonSaga } from "./components/switch/switchSaga";
-
 const _reduxToolsPresent = () =>
   typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === "function";
 const _isDevelopment = () => process.env.NODE_ENV === "development";

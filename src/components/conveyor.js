@@ -15,8 +15,11 @@ const useStyles = makeStyles((theme) => ({
     background: "#000",
     borderRadius: 5,
     animation: "border-dance 4s infinite linear",
+    transition: theme.transitions.create(["transform"], {
+      duration: theme.transitions.duration.complex,
+    }),
+    margin: 2,
   },
-  "& :hover": {},
 }));
 
 const ConveyorComponent = () => {

@@ -1,14 +1,18 @@
-import { put, call, take, takeEvery, fork, delay } from "redux-saga/effects";
+import { put, takeEvery, fork, delay } from "redux-saga/effects";
 
-import { messages } from "../../constants";
+import { messages, GLOBAL_ENGINE_PULSE_PERIOD } from "../../constants";
 
-import { turnOnEngine, turnOffEngine, pulseEngine } from "./actions";
+import {
+  turnOnEngine,
+  turnOffEngine,
+  pulseEngine,
+  stopPulseEngine,
+} from "./actions";
 
 export default function* saga() {
   yield fork(watchOvenIsReady);
   yield fork(watchPauseSwitch);
   yield fork(watchStopSwitch);
-  yield fork(watchPulse);
 }
 
 function* watchOvenIsReady() {
@@ -16,17 +20,18 @@ function* watchOvenIsReady() {
 }
 
 function* startEngine() {
-  console.log("watchOvenIsReady start engine");
   yield put(turnOnEngine());
+  yield delay(GLOBAL_ENGINE_PULSE_PERIOD);
+  yield put(pulseEngine());
 }
 
 function* watchPauseSwitch() {
-  console.log("stop/pause engine");
   yield takeEvery(messages.PAUSE, pauseEngine);
 }
 
 function* pauseEngine() {
   yield put(turnOffEngine());
+  yield put(stopPulseEngine());
 }
 
 function* watchStopSwitch() {
@@ -34,15 +39,7 @@ function* watchStopSwitch() {
 }
 
 function* stopEngine() {
-    console.log('TODO stop engine if no left bisquits on belt');
-  // yield put(turnOffEngine());
-}
-
-function* watchPulse(){
-  yield takeEvery(messages.ENGINE_PULSE, pulsateEngine);
-}
-
-function* pulsateEngine() {
-  console.log('saga pulse engine');
-  yield put(pulseEngine());
+  //TODO stop engine if no more bisquits on conveyor
+  yield put(turnOffEngine());
+  yield put(stopPulseEngine());
 }

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -13,7 +13,6 @@ export default function SwitchComponent({
   onSwitchOff,
   onSwitchPause,
 }) {
-  console.log("SWITCH re-render");
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">Switch</FormLabel>

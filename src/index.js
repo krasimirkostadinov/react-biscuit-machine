@@ -4,13 +4,10 @@ import { Provider } from "react-redux";
 
 import App from "./app";
 import store from "./store";
-// import { sagaMiddleware, rootSaga } from "./sagas";
 
 import * as serviceWorker from "./serviceWorker";
 
-//TODO add .css
-
-// sagaMiddleware.run(rootSaga);
+import "./App.css";
 
 ReactDOM.render(
   <React.StrictMode>

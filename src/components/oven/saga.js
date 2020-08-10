@@ -1,20 +1,22 @@
-import { put, call, take, takeEvery, fork, delay } from "redux-saga/effects";
+import { put, take, takeEvery, fork, delay } from "redux-saga/effects";
 
-import { messages, HEATING_DELAY } from "../../constants";
+import {
+  messages,
+  HEATING_DELAY,
+  MIN_BAKING_TEMPERATURE,
+} from "../../constants";
 
 import {
   startHeatingOven,
   turnOnOven,
-  turnOffOven,
+  ovenCoolingStarted,
   ovenReady,
 } from "./actions";
-
-import { MIN_BAKING_TEMPERATURE, MAX_BAKING_TEMPERATURE } from "./view";
-
 
 export default function* saga() {
   yield fork(watchTurnOnOven);
   yield fork(watchTurnOnMachine);
+  yield fork(watchTurnOffMachine);
 }
 
 function* watchTurnOnMachine() {
@@ -26,12 +28,17 @@ function* watchTurnOnOven() {
 }
 
 export function* startOven() {
-  console.log("turn ON OVEN");
   yield put(turnOnOven());
   yield put(startHeatingOven());
-  console.log("start heating");
 
   yield delay(HEATING_DELAY);
   yield put(ovenReady(MIN_BAKING_TEMPERATURE));
-  console.log("oven ready");
+}
+
+function* watchTurnOffMachine() {
+  yield takeEvery(messages.ENGINE_PULSE_STOP, startCoolingOven);
+}
+
+export function* startCoolingOven() {
+  yield put(ovenCoolingStarted());
 }

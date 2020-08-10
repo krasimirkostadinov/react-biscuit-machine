@@ -13,6 +13,13 @@ export function startHeatingOven() {
 }
 
 export function ovenReady(temperature) {
-  console.log("temperature", temperature);
   return { type: messages.OVEN_READY, data: temperature };
+}
+
+export function addBiscuit() {
+  return { type: messages.READY_BISCUIT };
+}
+
+export function ovenCoolingStarted() {
+  return { type: messages.OVEN_COOLING };
 }

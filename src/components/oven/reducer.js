@@ -3,11 +3,12 @@ import { messages } from "../../constants";
 const initialState = {
   isReady: false,
   isHeating: false,
+  isCooling: false,
   temperature: 0,
+  readyBiscuits: 0,
 };
 
 export default function ovenReducer(state = initialState, payload) {
-  // console.log("oven reducer", payload.type);
   switch (payload.type) {
     case messages.OVEN_ON:
       return { ...state, isHeating: true };
@@ -20,6 +21,10 @@ export default function ovenReducer(state = initialState, payload) {
         temperature: payload.data,
         isHeating: false,
       };
+    case messages.READY_BISCUIT:
+      return { ...state, readyBiscuits: ++state.readyBiscuits };
+    case messages.OVEN_COOLING:
+      return { ...state, isCooling: true };
     default:
       return state;
   }

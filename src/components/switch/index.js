@@ -1,4 +1,3 @@
-import React from "react";
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 
@@ -20,7 +19,6 @@ export default connect(
       dispatch(turnOffSwitch());
     },
     onSwitchPause() {
-      console.log("on pause");
       dispatch(pauseSwitch());
     },
   })
