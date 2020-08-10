@@ -20,6 +20,7 @@ export default connect(
       dispatch(turnOffSwitch());
     },
     onSwitchPause() {
+      console.log("on pause");
       dispatch(pauseSwitch());
     },
   })

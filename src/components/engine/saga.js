@@ -2,21 +2,21 @@ import { put, call, take, takeEvery, fork, delay } from "redux-saga/effects";
 
 import { messages } from "../../constants";
 
-import { turnOnEngine, turnOffEngine } from "./actions";
+import { turnOnEngine, turnOffEngine, pulseEngine } from "./actions";
 
 export default function* saga() {
   yield fork(watchOvenIsReady);
   yield fork(watchPauseSwitch);
   yield fork(watchStopSwitch);
+  yield fork(watchPulse);
 }
 
 function* watchOvenIsReady() {
-  console.log("watchOvenIsReady start engine");
   yield takeEvery(messages.OVEN_READY, startEngine);
 }
 
 function* startEngine() {
-  console.log("start engine");
+  console.log("watchOvenIsReady start engine");
   yield put(turnOnEngine());
 }
 
@@ -36,4 +36,13 @@ function* watchStopSwitch() {
 function* stopEngine() {
     console.log('TODO stop engine if no left bisquits on belt');
   // yield put(turnOffEngine());
+}
+
+function* watchPulse(){
+  yield takeEvery(messages.ENGINE_PULSE, pulsateEngine);
+}
+
+function* pulsateEngine() {
+  console.log('saga pulse engine');
+  yield put(pulseEngine());
 }

@@ -5,19 +5,19 @@ import { messages } from "../../constants";
 import { turnOnExtruder, turnOffExtruder } from "./actions";
 
 export default function* saga() {
-  yield fork(watchEngineIsWorking);
+  yield fork(watchEngineIsPulsating);
   yield fork(watchPauseSwitch);
   yield fork(watchStopSwitch);
 }
 
-function* watchEngineIsWorking() {
-  console.log("watchEngineIsWorking start engine");
-  yield takeEvery(messages.ENGINE_START_WORKING, startExtruder);
+function* watchEngineIsPulsating() {
+  console.log("watchEngineIsPulsating start engine");
+  yield takeEvery(messages.ENGINE_PULSE, startExtruder);
 }
 
 function* startExtruder() {
   console.log("start extruder");
-  yield put(turnOnExtruder());
+  // yield put(turnOnExtruder());
 }
 
 function* watchPauseSwitch() {

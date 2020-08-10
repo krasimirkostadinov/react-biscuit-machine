@@ -13,6 +13,7 @@ export default function SwitchComponent({
   onSwitchOff,
   onSwitchPause,
 }) {
+  console.log("SWITCH re-render");
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">Switch</FormLabel>
@@ -36,7 +37,7 @@ export default function SwitchComponent({
               onChange={onSwitchPause}
             />
           }
-          label="pause"
+          label="Pause"
         />
       </FormGroup>
       <FormHelperText>Switching on will turn on the oven</FormHelperText>

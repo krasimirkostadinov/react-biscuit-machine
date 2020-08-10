@@ -16,19 +16,19 @@ export default connect(
       isHeating,
       temperature,
     })
-  ),
-  (dispatch) => ({
-    onStartOven() {
-      console.log("1");
-      dispatch(turnOnOven());
-    },
-    onTurnOffOven() {
-      console.log("2");
-      dispatch(turnOffOven());
-    },
-    onOvenReady() {
-      console.log("3");
-      dispatch(ovenReady());
-    },
-  })
+  )
+  // (dispatch) => ({
+  //   onStartOven() {
+  //     console.log("1");
+  //     dispatch(turnOnOven());
+  //   },
+  //   onTurnOffOven() {
+  //     console.log("2");
+  //     dispatch(turnOffOven());
+  //   },
+  //   onOvenReady() {
+  //     console.log("3");
+  //     dispatch(ovenReady());
+  //   },
+  // })
 )(OvenComponent);

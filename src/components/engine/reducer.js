@@ -2,6 +2,7 @@ import { messages } from "../../constants";
 
 const initialState = {
   isEngineRunning: false,
+  isPulsation: false,
 };
 
 export default function engineReducer(state = initialState, payload) {
@@ -11,6 +12,8 @@ export default function engineReducer(state = initialState, payload) {
       return { ...state, isEngineRunning: true };
     case messages.ENGINE_STOP_WORKING:
       return { ...state, isEngineRunning: false };
+    case messages.ENGINE_PULSE:
+      return { ...state, isPulsation: true };
     default:
       return state;
   }

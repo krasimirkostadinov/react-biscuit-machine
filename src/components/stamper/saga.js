@@ -16,7 +16,7 @@ function* watchExtruderIsWorking() {
 }
 
 function* startStamper() {
-  yield delay(5000);
+  // yield delay(5000);
   console.log("start stamper");
   yield put(turnOnStamper());
 }

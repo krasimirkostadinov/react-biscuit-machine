@@ -8,6 +8,7 @@ export const userActions = objKeyMap([
   "OVEN_START_HEATING",
   "ENGINE_START_WORKING",
   "ENGINE_STOP_WORKING",
+  "ENGINE_PULSE",
   "EXTRUDER_ON",
   "EXTRUDER_OFF",
   "STAMPER_ON",
@@ -18,20 +19,26 @@ export const messages = {
   ...userActions,
 };
 
-function objKeyMap(arr, f) {
+function objKeyMap(array, f) {
   return Object.freeze(
     Object.create(
       null,
-      arr.reduce(
-        (acc, key) => (
-          (acc[f ? f(key) : key] = {
+      array.reduce(
+        (accum, key) => (
+          (accum[f ? f(key) : key] = {
             value: key,
             enumerable: true,
           }),
-          acc
+          accum
         ),
         {}
       )
     )
   );
 }
+
+export const GLOBAL_ENGINE_PULSE_PERIOD = 2000;
+export const HEATING_DELAY = 3000;
+export const MIN_BAKING_TEMPERATURE = 220;
+export const MAX_BAKING_TEMPERATURE = 240;
+

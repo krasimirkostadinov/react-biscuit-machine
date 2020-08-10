@@ -1,6 +1,6 @@
 import { put, call, take, takeEvery, fork, delay } from "redux-saga/effects";
 
-import { messages } from "../../constants";
+import { messages, HEATING_DELAY } from "../../constants";
 
 import {
   startHeatingOven,
@@ -10,7 +10,7 @@ import {
 } from "./actions";
 
 import { MIN_BAKING_TEMPERATURE, MAX_BAKING_TEMPERATURE } from "./view";
-export const HEATING_DELAY = 3000;
+
 
 export default function* saga() {
   yield fork(watchTurnOnOven);

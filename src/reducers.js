@@ -8,5 +8,5 @@ import { reducer as engineReducer } from "./components/engine";
 export default combineReducers({
   switchButton: switchReducer,
   oven: ovenReducer,
-  engine: engineReducer,
+  engineMachine: engineReducer,
 });
