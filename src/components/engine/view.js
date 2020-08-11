@@ -1,9 +1,10 @@
 import React from "react";
-import BlurCircularIcon from "@material-ui/icons/WbSunny";
-import { makeStyles } from "@material-ui/core/styles";
-
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
+import PropTypes from "prop-types";
+
+import BlurCircularIcon from "@material-ui/icons/WbSunny";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +26,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function EngineComponent({ isEngineRunning, isReady, onPulse }) {
+function EngineComponent({
+  isEngineRunning,
+  isEnginePulsation,
+  isReady,
+  onPulse,
+}) {
   const classes = useStyles();
 
   //TODO make pulse event
@@ -49,9 +55,17 @@ function EngineComponent({ isEngineRunning, isReady, onPulse }) {
         />
       </div>
       <div>Engine working: {isEngineRunning ? "YES" : "NO"}</div>
+      <div>Engine pulse: {isEnginePulsation ? "YES" : "NO"}</div>
     </div>
   );
 }
+
+EngineComponent.prototype = {
+  isEngineRunning: PropTypes.bool.isRequired,
+  isEnginePulsation: PropTypes.bool.isRequired,
+  isReady: PropTypes.bool.isRequired,
+  onPulse: PropTypes.func.isRequired,
+};
 
 export default connect(
   createSelector(

@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
-
+import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+
+import {
+  GLOBAL_ENGINE_PULSE_PERIOD,
+  OVEN_COOLING_DELAY,
+} from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   oven: {
     border: "1px solid",
     width: 200,
-    height: 100,
+    height: 125,
     position: "relative",
     textAlign: "center",
   },
@@ -34,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
   heaterCold: {
     background: "#DDD",
   },
+  heaterCooling: {
+    background: "#00FFFF !important",
+  },
 
   notice: {
     color: "#B00D23",
@@ -50,18 +58,29 @@ export default function OvenComponent({
   isHeating,
   temperature,
   isEnginePulsation,
+  isCooling,
   onAddBiscuit,
+  onOvenCool,
 }) {
   const classes = useStyles();
-
   useEffect(() => {
-    if (isReady && isEnginePulsation) {
+    if (isReady && isEnginePulsation && !isCooling) {
       const interval = setInterval(() => {
         onAddBiscuit && onAddBiscuit();
-      }, 2000);
+      }, GLOBAL_ENGINE_PULSE_PERIOD);
       return () => clearInterval(interval);
     }
-  }, [isReady, isEnginePulsation, onAddBiscuit]);
+  }, [isReady, isEnginePulsation, isCooling, onAddBiscuit]);
+
+  useEffect(() => {
+    if (isReady) {
+      const interval = setInterval(() => {
+        onOvenCool && onOvenCool();
+      }, OVEN_COOLING_DELAY);
+      return () => clearInterval(interval);
+    }
+    return;
+  }, [isReady, onOvenCool]);
 
   return (
     <>
@@ -70,15 +89,27 @@ export default function OvenComponent({
         <div className={classes.inner}>
           <hr
             className={`
-            ${classes.heater} 
+            ${classes.heater}            
             ${isHeating ? classes.heaterHeating : ""} 
             ${isReady ? classes.heaterHot : ""}
+            ${isCooling ? classes.heaterCooling : ""}
           `}
           />
           {isHeating && <span className={classes.notice}>OVEN IS HEATING</span>}
-          {temperature > 0 && <span>temp.:{temperature}</span>}
+          {temperature > 0 && !isCooling && <span>temp.:{temperature}</span>}
+          {isCooling && <span>Cooling down</span>}
         </div>
       </div>
     </>
   );
 }
+
+OvenComponent.prototype = {
+  isReady: PropTypes.bool.isRequired,
+  isHeating: PropTypes.bool.isRequired,
+  isEnginePulsation: PropTypes.bool.isRequired,
+  isCooling: PropTypes.bool.isRequired,
+  temperature: PropTypes.number.isRequired,
+  onAddBiscuit: PropTypes.func.isRequired,
+  onOvenCool: PropTypes.func.isRequired,
+};

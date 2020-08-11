@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import ExtruderImage from "../../images/extruder.png";
 import ExtrudedBisquit from "../../images/extruded-biscuit.png";
@@ -10,9 +11,12 @@ export default function ExtruderComponent({ isEnginePulsation }) {
       {isEnginePulsation && (
         <div>
           <img src={ExtrudedBisquit} alt="Extruder biscuit" />
-          pulse
         </div>
       )}
     </>
   );
 }
+
+ExtruderComponent.prototype = {
+  isEnginePulsation: PropTypes.bool.isRequired,
+};

@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { createSelector } from "reselect";
 
-import { addBiscuit } from "./actions";
+import { addBiscuit, ovenCoolingStarted } from "./actions";
 import OvenComponent from "./view";
 
 export { default as saga } from "./saga";
@@ -19,6 +19,9 @@ export default connect(
   (dispatch) => ({
     onAddBiscuit() {
       dispatch(addBiscuit());
+    },
+    onOvenCool() {
+      dispatch(ovenCoolingStarted());
     },
   })
 )(OvenComponent);

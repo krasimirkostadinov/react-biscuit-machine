@@ -1,4 +1,4 @@
-import { put, takeEvery, fork, delay } from "redux-saga/effects";
+import { put, takeEvery, fork, delay, takeLatest } from "redux-saga/effects";
 
 import { messages, GLOBAL_ENGINE_PULSE_PERIOD } from "../../constants";
 
@@ -13,6 +13,7 @@ export default function* saga() {
   yield fork(watchOvenIsReady);
   yield fork(watchPauseSwitch);
   yield fork(watchStopSwitch);
+  yield fork(watchCoolingOven);
 }
 
 function* watchOvenIsReady() {
@@ -30,7 +31,6 @@ function* watchPauseSwitch() {
 }
 
 function* pauseEngine() {
-  yield put(turnOffEngine());
   yield put(stopPulseEngine());
 }
 
@@ -41,5 +41,13 @@ function* watchStopSwitch() {
 function* stopEngine() {
   //TODO stop engine if no more bisquits on conveyor
   yield put(turnOffEngine());
+  yield put(stopPulseEngine());
+}
+
+function* watchCoolingOven() {
+  yield takeLatest(messages.OVEN_COOLING, holdEngine);
+}
+
+export function* holdEngine() {
   yield put(stopPulseEngine());
 }
