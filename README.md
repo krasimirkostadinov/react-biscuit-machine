@@ -32,7 +32,9 @@ Installation:
   
  Future improvements:
  -------------------
+ - temperature variation between MIN & MAX baking
  - add tests
+ - add cancelable/halt events in saga
 
 Project preview:
 ----------------
